@@ -1,11 +1,16 @@
 # Simple NGINX reverse proxy
 
-This repo provides an extremely basic NGINX reverse proxy image.
+This repo provides an extremely basic NGINX reverse proxy image with JSON access logs.
 
-It requires a single environment variable - `BACKEND_HOST` which defines where requests are sent to over **HTTP**.
+It requires a the following environment variables:
 
-Notes:
+- `APIS_BACKEND_HOST`
+- `BFFS_BACKEND_HOST`
 
-- Proxy is done from port 80 to port 80;
+**NOTES**:
 
-- Original `Host` header is passed to the target.
+- All requests are sent to over **HTTP**.
+
+- Listening on port 80;
+
+- The `X-Real-IP` and `X-Forwarded-For` headers are passed along to the target.
