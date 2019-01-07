@@ -9,11 +9,12 @@ server {
   server_name proxy;
   access_log /dev/stdout jsonlog;
 
-  location / {
-    proxy_pass       http://$BACKEND_HOST;
-    proxy_set_header Host \$host;
+  location ~ ([^/]+)(/.*)?\$ {
+    proxy_pass       http://$BACKEND_HOST\$2\$is_args\$args;
+    proxy_set_header Host \$1.$HOST_SUFFIX;
     proxy_set_header X-Real-IP \$remote_addr;
     proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header X-Original-URI \$request_uri;
   }
 }
 EOF
